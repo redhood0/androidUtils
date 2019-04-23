@@ -7,14 +7,6 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button"
@@ -28,5 +20,21 @@
         android:id="@+id/iv_photo"
         android:layout_width="300dp"
         android:layout_height="300dp" />
+
+    <Button
+        android:onClick="searchLost"
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="serach" />
+
+    <TextView
+        android:id="@+id/tv_showMsg"
+        android:layout_width="match_parent"
+        android:layout_height="296dp"
+        android:layout_marginTop="20dp"
+        android:textSize="6pt"
+        android:singleLine="false"
+        android:text="1111111111111111111111111111111111111111" />
 
 </LinearLayout>

@@ -1,24 +1,29 @@
 package com.hooli.util;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hooli.util.lostSearch.SearchTask;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import org.json.JSONException;
+
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,7 +31,10 @@ import java.util.Date;
 import io.reactivex.functions.Consumer;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static Context MainActivityContext;
     Button button;
+    TextView tv_showMsg;
     //权限工具
     final RxPermissions rxPermissions = new RxPermissions(this);
 
@@ -127,6 +135,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         CameraUtil cameraUtil = new CameraUtil();
         cameraUtil.setPic(imageView);
+        try {
+            cameraUtil.makeImgSmall(this);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     //----------------------------------
@@ -134,6 +147,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        MainActivityContext = MainActivity.this;
+        tv_showMsg = findViewById(R.id.tv_showMsg);
+
         imageView = findViewById(R.id.iv_photo);
         button = findViewById(R.id.button);
         button.setOnClickListener(n -> {
@@ -148,4 +164,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+//点击事件
+    public void searchLost(View view) throws IOException, JSONException {
+        Log.i("Search","start search");
+        //Log.i("Search","start search:" + new File(CameraUtil.currentPhotoPath));
+        //LikePIcUtil.searchLost(CameraUtil.currentPhotoPath);
+        new SearchTask().execute(tv_showMsg);
+        Log.i("Search","end search");
+    }
+
+
 }

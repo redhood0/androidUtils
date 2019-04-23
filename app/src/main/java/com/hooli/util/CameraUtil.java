@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,7 +21,7 @@ public class CameraUtil {
 
     static final int REQUEST_TAKE_PHOTO = 1;
 
-    static String currentPhotoPath;
+    public static String currentPhotoPath;
 
     //定义图片路径
     private File createImageFile() throws IOException {
@@ -94,6 +95,13 @@ public class CameraUtil {
 
         Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
         Log.i("Bitmap-", bitmap.toString() + "," + currentPhotoPath + "," + bmOptions);
+
+
+
         imageView.setImageBitmap(bitmap);
+    }
+
+    public void makeImgSmall(AppCompatActivity activity) throws FileNotFoundException {
+        ImageUtil.compressImgFile(new File(currentPhotoPath), activity);
     }
 }
